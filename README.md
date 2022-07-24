@@ -1,6 +1,6 @@
 # Credit-Score-Classification
 
-- Projeto de classificação de clientes de acordo com seus dados pessoais e financeiros. Dataset disponível em https://www.kaggle.com/datasets/parisrohan/credit-score-classification.
+- Projeto de classificação de clientes de acordo com seus dados pessoais e financeiros. Dataset disponível em https://www.kaggle.com/laotse/credit-risk-dataset.
 - GitHub : https://github.com/Ewertonv90/Credit-Score-Classification
 
 
