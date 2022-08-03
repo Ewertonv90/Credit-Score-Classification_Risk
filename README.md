@@ -20,3 +20,5 @@ Você está trabalhando como cientista de dados em uma empresa financeira global
 
 Tarefa
 Dadas as informações relacionadas ao crédito de uma pessoa, construa um modelo de aprendizado de máquina que possa classificar a pontuação de crédito.
+
+Bussiness Success Criteria : 85% or more
