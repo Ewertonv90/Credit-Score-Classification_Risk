@@ -1,0 +1,7 @@
+python -m venv venv ( criar ambiente virtual)
+
+Set-ExecutionPolicy Unrestricted -Scope Process
+
+venv/Scripts/activate 
+
+python NomeDoSeuApp.py
