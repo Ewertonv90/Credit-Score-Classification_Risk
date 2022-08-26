@@ -1,7 +1,10 @@
-python -m venv venv ( criar ambiente virtual)
+python -m venv venv ( criar ambiente virtual se o projeto não tiver um)
 
-Set-ExecutionPolicy Unrestricted -Scope Process
+Set-ExecutionPolicy Unrestricted -Scope Process (debloqueio do powershell para criar ambiente virtual no windows)
 
-venv/Scripts/activate 
+venv/Scripts/activate   ( ativar ambiente virtual)
 
-python NomeDoSeuApp.py
+pip install -r /docs/requirements.txt    ( instalar lista de libs necessarias para o projeto)
+
+python NomeDoSeuApp.py   
+
