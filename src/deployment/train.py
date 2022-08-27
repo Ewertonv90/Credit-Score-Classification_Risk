@@ -44,22 +44,22 @@
 
 import pandas as pd
 import numpy as np
-
+from sklearn.pipeline import Pipeline
 from imblearn.over_sampling import ADASYN
-from sklearn.preprocessing import StandardScaler
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import f1_score,accuracy_score, precision_score, recall_score
 import joblib
 # Data Engeneering
 
-df = pd.read_csv('C:/Users/ewert/Desktop/Credit-Score-Classification/data/credit_risk_dataset.csv')
+df = pd.read_csv('data/credit_risk_dataset.csv')
 
 
-df = df.drop(columns=['loan_intent','person_emp_length', 'loan_int_rate', 'loan_grade'])
-df.head()
-
-df.loc[df['person_age'] >= 100]
+#df = df.drop(columns=['loan_intent','person_emp_length', 'loan_int_rate', 'loan_grade'])
 
 index = df[ df['person_age'] >= 100  ].index
 df.drop(index, inplace=True)
@@ -68,41 +68,65 @@ df = df.dropna(how="all")
 
 df = df.drop_duplicates(keep='first')
 
-df = pd.get_dummies(df, columns=['person_home_ownership', 'cb_person_default_on_file'])
+df = pd.get_dummies(df, columns=['loan_intent', 'loan_grade','person_home_ownership', 'cb_person_default_on_file'])
 
 
 X = df.drop(columns=['loan_status'])
 y = df['loan_status']
 
-# Oversampling com tecnica ADASYN
-
-ada = ADASYN(sampling_strategy='auto', random_state=42)
-X_res, y_res = ada.fit_resample(X, y)
-
-# Standardazation
-
-
-scaler = StandardScaler()
-
-df = scaler.fit_transform(df)
-
-df = pd.DataFrame(df)
 
 
 # Train and Test split
+X_train, X_test, y_train, y_test = train_test_split(X, y , test_size=0.2, random_state=42)
+
+# # # Oversampling com tecnica ADASYN
+ada = ADASYN(sampling_strategy='auto', random_state=42)
+X, y = ada.fit_resample(X, y)
 
 
-X_train, X_test, y_train, y_test = train_test_split(X, y , test_size=0.3, random_state=42)
+# PIPELINE
+
+pipe = Pipeline(steps=[
+                    
+                    ('encoder', ColumnTransformer(
+               [
+                ('encoder_type', OneHotEncoder(drop='first'),['loan_intent', 'loan_grade','person_home_ownership', 'cb_person_default_on_file'])
+                ]
+               )
+                    ),
+                    ('imputer', SimpleImputer(strategy='mean',fill_value=np.nan)),
+                    ('classifier', GradientBoostingClassifier(max_depth=5, min_samples_split=3,
+                                            n_estimators=300))
+                          ]
+)
 
 
+pipe.fit(X_train, y_train)
 
-# # Gradient Boosting classifier
+print(round(pipe.score(X_train, y_train),4)*100, "%")
+print(round(pipe.score(X_test, y_test),4)*100 , "%")
 
+y_pred = pipe.predict(X_test)
 
-clf = GradientBoostingClassifier(criterion='squared_error', learning_rate=0.1, loss='exponential', max_depth=5, min_samples_leaf=5, min_samples_split=10, n_estimators=300, subsample=0.8)
+param_grid = {
+    'classifier__n_estimators' : [300],
+    'classifier__max_depth' : [5],
+    'classifier__min_samples_split': [3],
+}
 
-clf.fit(X_train, y_train)
-y_pred = clf.predict(X_test) 
+# param_grid = {
+#     'classifier__n_estimators' : [100, 200, 300],
+#     'classifier__learning_rate' : [0.1, 0.5, 1.0],
+#     'classifier__subsample': [0.1,  0.3, 0.5, 0.8, 1.0],
+#     'classifier__max_depth' : [1, 3, 5, 10],
+#     'classifier__min_samples_leaf' : [1,3, 5, 10],
+#     'classifier__min_samples_split': [2, 3, 5, 10],
+# }
+
+grid = GridSearchCV(estimator=pipe, param_grid=param_grid,cv=5 , n_jobs= -1, verbose=0, )
+grid.fit(X_train, y_train)
+print(grid.score(X_train, y_train))
+print(grid.score(X_test, y_test))
 
 f1 = round(f1_score(y_test, y_pred, average="micro")*100, 2)
 accuracy = round(accuracy_score(y_test, y_pred)*100, 2)
@@ -123,7 +147,12 @@ metrics = {
                "recall" : recall,
        "f1" : f1
  }
-best_estimator = {}
-best_estimator = {'criterion': 'squared_error', 'learning_rate': 0.1, 'loss': 'exponential', 'max_depth': 5, 'min_samples_leaf': 5, 'min_samples_split': 10, 'n_estimators': 300, 'subsample': 0.8}
 
-joblib.dump(best_estimator,filename="src/deployment/models/model_pipeline.pkl",)
+best_pipeline = grid.best_estimator_
+
+joblib.dump(metrics, filename="log/model_score_train.txt")
+joblib.dump(best_pipeline, filename="src/deployment/models/model_pipeline.pkl")
+
+
+
+
