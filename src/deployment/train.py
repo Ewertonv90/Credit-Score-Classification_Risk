@@ -90,7 +90,7 @@ pipe = Pipeline(steps=[
                     
                     ('encoder', ColumnTransformer(
                [
-                ('encoder_type', OneHotEncoder(drop='first'),['loan_intent', 'loan_grade','person_home_ownership', 'cb_person_default_on_file'])
+                ('encoder_type', OneHotEncoder(drop='first'),['loan_intent','loan_grade','person_home_ownership', 'cb_person_default_on_file'])
                 ]
                )
                     ),

@@ -8,3 +8,19 @@ pip install -r /docs/requirements.txt    ( instalar lista de libs necessarias pa
 
 python NomeDoSeuApp.py   
 
+dados para predict na API http://localhost:5000/predict
+{
+  "data": {
+    "person_age": 26,
+    "person_income": 39000,
+    "person_home_ownership": "OWN",
+    "person_emp_length": 4.0,
+    "loan_intent": "VENTURE",
+    "loan_grade": "B",
+    "loan_amnt": 9000,
+    "loan_int_rate": 60.49,
+    "loan_percent_income": 0.33,
+    "cb_person_default_on_file": "N",
+    "cb_person_cred_hist_length": 0
+  }
+}
