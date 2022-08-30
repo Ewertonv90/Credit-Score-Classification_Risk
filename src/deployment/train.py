@@ -45,7 +45,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.pipeline import Pipeline
-from imblearn.over_sampling import ADASYN
+from sklearn.preprocessing import Normalizer
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
@@ -58,18 +58,12 @@ import joblib
 
 df = pd.read_csv('data/credit_risk_dataset.csv')
 
-
-#df = df.drop(columns=['loan_intent','person_emp_length', 'loan_int_rate', 'loan_grade'])
-
 index = df[ df['person_age'] >= 100  ].index
 df.drop(index, inplace=True)
 
 df = df.dropna(how="all")
 
 df = df.drop_duplicates(keep='first')
-
-df = pd.get_dummies(df, columns=['loan_intent', 'loan_grade','person_home_ownership', 'cb_person_default_on_file'])
-
 
 X = df.drop(columns=['loan_status'])
 y = df['loan_status']
@@ -79,15 +73,10 @@ y = df['loan_status']
 # Train and Test split
 X_train, X_test, y_train, y_test = train_test_split(X, y , test_size=0.2, random_state=42)
 
-# # # Oversampling com tecnica ADASYN
-ada = ADASYN(sampling_strategy='auto', random_state=42)
-X, y = ada.fit_resample(X, y)
-
-
 # PIPELINE
 
 pipe = Pipeline(steps=[
-                    
+                   
                     ('encoder', ColumnTransformer(
                [
                 ('encoder_type', OneHotEncoder(drop='first'),['loan_intent','loan_grade','person_home_ownership', 'cb_person_default_on_file'])
@@ -95,6 +84,7 @@ pipe = Pipeline(steps=[
                )
                     ),
                     ('imputer', SimpleImputer(strategy='mean',fill_value=np.nan)),
+                    ('normalizer', Normalizer()),
                     ('classifier', GradientBoostingClassifier(max_depth=5, min_samples_split=3,
                                             n_estimators=300))
                           ]
@@ -123,7 +113,7 @@ param_grid = {
 #     'classifier__min_samples_split': [2, 3, 5, 10],
 # }
 
-grid = GridSearchCV(estimator=pipe, param_grid=param_grid,cv=5 , n_jobs= -1, verbose=0, )
+grid = GridSearchCV(estimator=pipe, param_grid=param_grid,cv=3 , n_jobs= -1, verbose=0, )
 grid.fit(X_train, y_train)
 print(grid.score(X_train, y_train))
 print(grid.score(X_test, y_test))
@@ -150,7 +140,7 @@ metrics = {
 
 best_pipeline = grid.best_estimator_
 
-joblib.dump(metrics, filename="log/model_score_train.txt")
+joblib.dump(metrics, filename="log/model_score_train.pkl")
 joblib.dump(best_pipeline, filename="src/deployment/models/model_pipeline.pkl")
 
 
