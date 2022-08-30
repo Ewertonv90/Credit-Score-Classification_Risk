@@ -6,7 +6,7 @@ venv/Scripts/activate   ( ativar ambiente virtual)
 
 pip install -r /docs/requirements.txt    ( instalar lista de libs necessarias para o projeto)
 
-python NomeDoSeuApp.py   
+python train.py   
 
 dados para predict na API http://localhost:5000/predict
 {
