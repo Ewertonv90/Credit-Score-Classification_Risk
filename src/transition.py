@@ -1,3 +1,122 @@
+# Exemplo de DataFrames com colunas e dados nulos
+data1 = [
+    ("Ana", 28, "ana@example.com", "1234567890", "Rua A", "Cidade A"),
+    ("Bruno2", 40, "bruno@example.com", "987654321", "Rua B", "Cidade B"),
+    ("Carlos", 30, None, "123123123", "Rua F", "Cidade Z"),
+    ("Daniela", 28, "daniela@example.com", None, "Rua D", "Cidade D"),
+    ("Eduardo", 38, "eduardo@example.com", "456456456", None, "Cidade Z"),
+    ("Fernanda", 22, "fernanda@example.com", "789789789", "Rua F", None),
+    ("Gustavo", None, "gustavo@example.comm", "321321321", "Rua G", "Cidade G"),
+    ("Helena", 27, None, "654654654", "Rua H", "Cidade H"),
+    ("Igor", 29, "igor@example.comm", "987987987", "Rua I", "Cidade I"),
+    ("Julia", None, "julia@example.comm", "321654987", "Rua J", "Cidade J"),
+    ("Karina", 32, None, "123789456", None, "Cidade K"),
+    ("Luis", 31, "luis@example.com", None, "Rua L", "Cidade L"),
+    ("Marina", 26, "marina@example.com", "654987321", "Rua M", None),
+    ("Nina1", None, "nina@example.comm", "789123456", "Rua N", "Cidade Z"),
+    ("Otavio", 33, "otavio@example.com", "123456123", "Rua O", "Cidade O"),
+    ("Paula", 24, "paula@example.com", "456789789", "Rua P", "Cidade P"),
+    ("Rafaelo", None, "rafael@example.com", "789456123", "Rua Q", "Cidade Q"),
+    ("Sofia", 23, "sofia@example.com", "123123789", "Rua N", "Cidade R"),
+    ("Tiago", 34, "tiago@example.com", "456123456", "Rua S", "Cidade S"),
+    ("Ursula", 28, "ursula@example.comm", "789789123", None, "Cidade Z"),
+    ("Victoria", None, "victor@example.com", "321321654", "Rua U", "Cidade U"),
+    ("Wagner", 29, None, "654654321", "Rua U", "Cidade V"),
+    ("Yarara", 27, "yara@example.com", "987987654", "Rua W", "Cidade W")
+]
+
+data2 = [
+    ("Ana", 25, "ana@example.com", "123456789", "Rua A", "Cidade A"),
+    ("Bruno", None, "bruno@example.com", "987654321", "Rua B", "Cidade B"),
+    ("Carlos", 30, None, "123123123", "Rua C", "Cidade C"),
+    ("Daniela", 28, "daniela@example.com", None, "Rua D", "Cidade D"),
+    ("Eduardo", 35, "eduardo@example.com", "456456456", None, "Cidade E"),
+    ("Fernanda", 22, "fernanda@example.com", "789789789", "Rua F", None),
+    ("Gustavo", None, "gustavo@example.com", "321321321", "Rua G", "Cidade G"),
+    ("Helena", 27, None, "654654654", "Rua H", "Cidade H"),
+    ("Igor", 29, "igor@example.com", "987987987", "Rua I", "Cidade I"),
+    ("Julia", None, "julia@example.com", "321654987", "Rua J", "Cidade J"),
+    ("Karina", 32, None, "123789456", None, "Cidade K"),
+    ("Luis", 31, "luis@example.com", None, "Rua L", "Cidade L"),
+    ("Marina", 26, "marina@example.com", "654987321", "Rua M", None),
+    ("Nina", None, "nina@example.com", "789123456", "Rua N", "Cidade N"),
+    ("Otavio", 33, "otavio@example.com", "123456123", "Rua O", "Cidade O"),
+    ("Paula", 24, "paula@example.com", "456789789", "Rua P", "Cidade P"),
+    ("Rafael", None, "rafael@example.com", "789456123", "Rua Q", "Cidade Q"),
+    ("Sofia", 23, "sofia@example.com", "123123789", "Rua R", "Cidade R"),
+    ("Tiago", 34, "tiago@example.com", "456123456", "Rua S", "Cidade S"),
+    ("Ursula", 28, "ursula@example.com", "789789123", None, "Cidade T"),
+    ("Victor", None, "victor@example.com", "321321654", "Rua U", "Cidade U"),
+    ("Wagner", 29, None, "654654321", "Rua V", "Cidade V"),
+    ("Yara", 27, "yara@example.com", "987987654", "Rua W", "Cidade W"),
+    ("Zeca", 40, "zeca@example.com", "123123123", "Rua Z", "Cidade Z"),
+    ("Ana2", 45, "ana2@example.com", "123456789", "Rua A2", "Cidade A2"),
+    ("Bruno2", None, "bruno2@example.com", "987654321", "Rua B2", "Cidade B2"),
+    ("Carlos2", 30, None, "123123123", "Rua C2", "Cidade C2"),
+    ("Daniela2", 28, "daniela2@example.com", None, "Rua D2", "Cidade D2"),
+    ("Eduardo2", 35, "eduardo2@example.com", "456456456", None, "Cidade E2"),
+    ("Fernanda2", 22, "fernanda2@example.com", "789789789", "Rua F2", None),
+    ("Gustavo2", None, "gustavo2@example.com", "321321321", "Rua G2", "Cidade G2"),
+    ("Helena2", 27, None, "654654654", "Rua H2", "Cidade H2"),
+    ("Igor2", 29, "igor2@example.com", "987987987", "Rua I2", "Cidade I2"),
+    ("Julia2", None, "julia2@example.com", "321654987", "Rua J2", "Cidade J2"),
+    ("Karina2", 32, None, "123789456", None, "Cidade K2"),
+    ("Luis2", 31, "luis2@example.com", None, "Rua L2", "Cidade L2"),
+    ("Marina2", 26, "marina2@example.com", "654987321", "Rua M2", None),
+    ("Nina2", None, "nina2@example.com", "789123456", "Rua N2", "Cidade N2")
+]
+
+columns2_diferença = ["nome", "email", "telefone", "endereco", "cidade"]
+
+data2_diferença_colunas = [
+    ("Ana", "ana@example.com", "123456789", "Rua A", "Cidade A"),
+    ("Bruno", "bruno@example.com", "987654321", "Rua B", "Cidade B"),
+    ("Carlos", None, "123123123", "Rua C", "Cidade C"),
+    ("Daniela", "daniela@example.com", None, "Rua D", "Cidade D"),
+    ("Eduardo", "eduardo@example.com", "456456456", None, "Cidade E"),
+    ("Fernanda", "fernanda@example.com", "789789789", "Rua F", None),
+    ("Gustavo", "gustavo@example.com", "321321321", "Rua G", "Cidade G"),
+    ("Helena", None, "654654654", "Rua H", "Cidade H"),
+    ("Igor", "igor@example.com", "987987987", "Rua I", "Cidade I"),
+    ("Julia", "julia@example.com", "321654987", "Rua J", "Cidade J"),
+    ("Karina", None, "123789456", None, "Cidade K"),
+    ("Luis", "luis@example.com", None, "Rua L", "Cidade L"),
+    ("Marina", "marina@example.com", "654987321", "Rua M", None),
+    ("Nina", "nina@example.com", "789123456", "Rua N", "Cidade N"),
+    ("Otavio", "otavio@example.com", "123456123", "Rua O", "Cidade O"),
+    ("Paula", "paula@example.com", "456789789", "Rua P", "Cidade P"),
+    ("Rafael", "rafael@example.com", "789456123", "Rua Q", "Cidade Q"),
+    ("Sofia", "sofia@example.com", "123123789", "Rua R", "Cidade R"),
+    ("Tiago", "tiago@example.com", "456123456", "Rua S", "Cidade S"),
+    ("Ursula", "ursula@example.com", "789789123", None, "Cidade T"),
+    ("Victor", "victor@example.com", "321321654", "Rua U", "Cidade U"),
+    ("Wagner", None, "654654321", "Rua V", "Cidade V"),
+    ("Yara", "yara@example.com", "987987654", "Rua W", "Cidade W"),
+    ("Zeca", "zeca@example.com", "123123123", "Rua X", "Cidade X"),
+    ("Ana2", "ana2@example.com", "123456789", "Rua A2", "Cidade A2"),
+    ("Bruno2", "bruno2@example.com", "987654321", "Rua B2", "Cidade B2"),
+    ("Carlos2", None, "123123123", "Rua C2", "Cidade C2"),
+    ("Daniela2", "daniela2@example.com", None, "Rua D2", "Cidade D2"),
+    ("Eduardo2", "eduardo2@example.com", "456456456", None, "Cidade E2"),
+    ("Fernanda2", "fernanda2@example.com", "789789789", "Rua F2", None),
+    ("Gustavo2", "gustavo2@example.com", "321321321", "Rua G2", "Cidade G2"),
+    ("Helena2", None, "654654654", "Rua H2", "Cidade H2"),
+    ("Igor2", "igor2@example.com", "987987987", "Rua I2", "Cidade I2"),
+    ("Julia2", "julia2@example.com", "321654987", "Rua J2", "Cidade J2"),
+    ("Karina2", None, "123789456", None, "Cidade K2"),
+    ("Luis2", "luis2@example.com", None, "Rua L2", "Cidade L2"),
+    ("Marina2", "marina2@example.com", "654987321", "Rua M2", None),
+    ("Nina2", "nina2@example.com", "789123456", "Rua N2", "Cidade N2")
+]
+
+columns1 = ["nome", "idade", "email", "telefone", "endereco", "cidade"]
+columns2 = ["nome", "idade","email", "telefone", "endereco", "cidade"]
+
+# data2_diferença_colunas , data_2 
+dataset_original = spark.createDataFrame(data1, columns1)
+dataset_homolog = spark.createDataFrame(data2, columns2)
+
+
 def homologacao(dataset_original, dataset_homolog, paralelismo=False, repartition_original=None, repartition_homolog=None, acuracia_aprovacao=99, coalesce_df_original=None, coalesce_df_homolog=None, arquivo=False):
     tempo_inicio = time.time()
     # # Pegar 10% do DataFrame original
