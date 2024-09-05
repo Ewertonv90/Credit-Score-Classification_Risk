@@ -1,0 +1,70 @@
+{
+  "Comment": "Step Functions que roda Glue Jobs dependendo de variáveis de input",
+  "StartAt": "Verifica Jobs",
+  "States": {
+    "Verifica Jobs": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "Verifica Base1",
+          "States": {
+            "Verifica Base1": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.base1",
+                  "NumericEquals": 1,
+                  "Next": "Executa Glue Job 1"
+                }
+              ],
+              "Default": "Pular Job 1"
+            },
+            "Executa Glue Job 1": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::glue:startJobRun.sync",
+              "Parameters": {
+                "JobName": "GlueJob1",
+                "Arguments": {}
+              },
+              "End": true
+            },
+            "Pular Job 1": {
+              "Type": "Pass",
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "Verifica Base2",
+          "States": {
+            "Verifica Base2": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.base2",
+                  "NumericEquals": 1,
+                  "Next": "Executa Glue Job 2"
+                }
+              ],
+              "Default": "Pular Job 2"
+            },
+            "Executa Glue Job 2": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::glue:startJobRun.sync",
+              "Parameters": {
+                "JobName": "GlueJob2",
+                "Arguments": {}
+              },
+              "End": true
+            },
+            "Pular Job 2": {
+              "Type": "Pass",
+              "End": true
+            }
+          }
+        }
+      ],
+      "End": true
+    }
+  }
+}
